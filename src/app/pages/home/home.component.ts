@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Necesario para pipes como 'currency'
 import { ProductService } from '../../services/product.service';
+import { Page } from '../../models/page';
 import { Product } from '../../models/product';
 
 @Component({
@@ -19,17 +20,26 @@ export class HomeComponent implements OnInit {
   isSearching: boolean = false;
   searchQuery: string = '';
 
+  // 🔥 Información adicional de paginación (opcional pero útil)
+  totalPages: number = 0;
+  totalElements: number = 0;
+  currentPage: number = 0;
+
   loadAllProducts() {
     this.isLoading = true;
     this.hasConnectionError = false;
     this.isSearching = false;
     this.searchQuery = '';
 
-    this.productService.getProducts().subscribe({
-      next: (data: Product[]) => {
-        this.products = data;
+    this.productService.getProducts({ page: 0, size: 20, sort: 'name,asc' }).subscribe({
+      next: (page: Page<Product>) => {
+        this.products = page.content;
+        this.totalPages = page.totalPages;
+        this.totalElements = page.totalElements;
+        this.currentPage = page.number;
         this.isLoading = false;
-        console.log('Productos cargados:', data);
+
+        console.log('Productos cargados:', page);
       },
       error: (err) => {
         console.error('Error conectando al backend:', err);
@@ -48,9 +58,11 @@ export class HomeComponent implements OnInit {
       this.isSearching = true;
       this.isLoading = true;
       // Llamar al servicio de búsqueda
-      this.productService.searchProductsByName(name).subscribe({
-        next: (data) => {
-          this.products = data;
+      this.productService.searchProductsByName({ name, page: 0, size: 20, sort: 'name,asc' }).subscribe({
+        next: (page: Page<Product>) => {
+          this.products = page.content;
+          this.totalPages = page.totalPages;
+          this.totalElements = page.totalElements;
           this.isLoading = false;
         },
         error: (err) => {

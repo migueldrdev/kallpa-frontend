@@ -5,13 +5,13 @@ import { Product } from '../../models/product';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-product-datail',
+  selector: 'app-product-detail',
   standalone: true,
   imports: [CommonModule],
   templateUrl: './product-detail.component.html',
   styleUrl: './product-detail.component.css'
 })
-export class ProductDatailComponent implements OnInit{
+export class ProductDetailComponent implements OnInit{
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private productService = inject(ProductService);
