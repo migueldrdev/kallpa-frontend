@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
   selector: 'app-product-datail',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './product-datail.component.html',
-  styleUrl: './product-datail.component.css'
+  templateUrl: './product-detail.component.html',
+  styleUrl: './product-detail.component.css'
 })
 export class ProductDatailComponent implements OnInit{
   private route = inject(ActivatedRoute);
