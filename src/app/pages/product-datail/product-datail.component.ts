@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router'; // Para leer la URL
+import { ActivatedRoute, Router } from '@angular/router'; // Para leer la URL y navegar
 import { ProductService } from '../../services/product.service';
 import { Product } from '../../models/product';
 import { CommonModule } from '@angular/common';
@@ -13,10 +13,15 @@ import { CommonModule } from '@angular/common';
 })
 export class ProductDatailComponent implements OnInit{
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
   private productService = inject(ProductService);
 
   product: Product | null = null;
   loading = true;
+
+  goToHome(): void {
+    this.router.navigate(['/']);
+  }
 
   ngOnInit(): void {
     // Leemos el parámetro ':slug' de la ruta

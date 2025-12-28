@@ -14,14 +14,59 @@ import { Product } from '../../models/product';
 export class HomeComponent implements OnInit {
   private productService = inject(ProductService);
   products: Product[] = [];
+  isLoading: boolean = true;
+  hasConnectionError: boolean = false;
+  isSearching: boolean = false;
+  searchQuery: string = '';
 
-  ngOnInit(): void {
+  loadAllProducts() {
+    this.isLoading = true;
+    this.hasConnectionError = false;
+    this.isSearching = false;
+    this.searchQuery = '';
+
     this.productService.getProducts().subscribe({
       next: (data: Product[]) => {
         this.products = data;
+        this.isLoading = false;
         console.log('Productos cargados:', data);
       },
-      error: (err) => console.error('Error conectando al backend:', err)
+      error: (err) => {
+        console.error('Error conectando al backend:', err);
+        this.hasConnectionError = true;
+        this.isLoading = false;
+      }
     });
+  }
+
+  searchProduct(event: Event) {
+    const input: HTMLInputElement = event.target as HTMLInputElement;
+    const name: string = input.value.trim();
+    this.searchQuery = name;
+
+    if (name.length > 2) {
+      this.isSearching = true;
+      this.isLoading = true;
+      // Llamar al servicio de búsqueda
+      this.productService.searchProductsByName(name).subscribe({
+        next: (data) => {
+          this.products = data;
+          this.isLoading = false;
+        },
+        error: (err) => {
+          console.error('Error en búsqueda:', err);
+          this.products = [];
+          this.isLoading = false;
+        }
+      });
+    } else if (name.length === 0) {
+      // Si borra todo, volver a cargar todos
+      this.loadAllProducts();
+    }
+  }
+
+  // Se llama automáticamente al iniciar el componente
+  ngOnInit(): void {
+    this.loadAllProducts();
   }
 }

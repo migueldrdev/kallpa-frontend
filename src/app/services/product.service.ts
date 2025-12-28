@@ -21,4 +21,9 @@ export class ProductService {
     const url = `${this.apiUrl}/${slug}`;
     return this.http.get<Product>(url);
   }
+
+  searchProductsByName(name: string): Observable<Product[]> {
+    const url = `${this.apiUrl}/search?name=${encodeURIComponent(name)}`;
+    return this.http.get<Product[]>(url);
+  }
 }
