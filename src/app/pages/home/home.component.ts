@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Necesario para pipes como 'currency'
 import { ProductService } from '@services/product.service';
+import { CartService } from '@services/cart.service';
 import { Page } from '@models/page';
 import { Product } from '@models/product';
 import { PaginationComponent } from '@components/pagination/pagination.component';
@@ -15,6 +16,7 @@ import { PaginationComponent } from '@components/pagination/pagination.component
 })
 export class HomeComponent implements OnInit {
   private productService = inject(ProductService);
+  private cartService = inject(CartService);
   products: Product[] = [];
   isLoading: boolean = true;
   hasConnectionError: boolean = false;
@@ -110,6 +112,13 @@ export class HomeComponent implements OnInit {
     // Scroll suave hacia arriba al cambiar página (Toque de UX fino)
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  addToCart(product: Product, quantity: number = 1): void {
+    if (product) {
+      this.cartService.addToCart(product, quantity);
+    }
+  }
+
   // Se llama automáticamente al iniciar el componente
   ngOnInit(): void {
     this.loadAllProducts();
