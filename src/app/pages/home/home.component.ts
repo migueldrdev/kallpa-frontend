@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common'; // Necesario para pipes como 'currency'
-import { ProductService } from '../../services/product.service';
-import { Page } from '../../models/page';
-import { Product } from '../../models/product';
-import { PaginationComponent } from '../../components/pagination/pagination.component';
+import { ProductService } from '@services/product.service';
+import { Page } from '@models/page';
+import { Product } from '@models/product';
+import { PaginationComponent } from '@components/pagination/pagination.component';
 
 @Component({
   selector: 'app-root',

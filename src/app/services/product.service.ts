@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Page } from '../models/page';
-import { Product } from '../models/product';
+import { Page } from '@models/page';
+import { Product } from '@models/product';
+import { ApiConfigService } from '@services/api-config.service';
 
 interface PageableParams {
   page?: number;
@@ -17,12 +18,13 @@ interface ProductSearchParams extends PageableParams {
 @Injectable({
   providedIn: 'root'
 })
+
 export class ProductService {
   // Inyección de dependencias moderna (sin constructor)
   private http = inject(HttpClient);
+  private readonly apiConfig = inject(ApiConfigService);
 
-  // ⚠️ Asegúrate que este puerto es el de tu Backend (8081)
-  private apiUrl = 'http://localhost:8081/api/v1/products';
+  private apiUrl = this.apiConfig.endpoints.products;
 
   /**
    * Construye HttpParams de forma segura y legible

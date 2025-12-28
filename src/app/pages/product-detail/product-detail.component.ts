@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router'; // Para leer la URL y navegar
-import { ProductService } from '../../services/product.service';
-import { Product } from '../../models/product';
 import { CommonModule } from '@angular/common';
+import { ProductService } from '@services/product.service';
+import { Product } from '@models/product';
 
 @Component({
   selector: 'app-product-detail',
