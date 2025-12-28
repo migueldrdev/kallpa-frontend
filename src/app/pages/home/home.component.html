@@ -13,10 +13,11 @@
     <!-- Lista de productos -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
       @for (product of products; track product.id) {
-      <a [routerLink]="['/p', product.slug]">
-        <div
-          class="cursor-pointer bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
-        >
+
+      <div
+        class="cursor-pointer bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300"
+      >
+        <a [routerLink]="['/p', product.slug]">
           <div
             class="h-48 bg-gray-200 flex items-center justify-center text-4xl"
           >
@@ -33,21 +34,40 @@
               {{ product.name }}
             </h2>
             <p class="text-gray-500 text-sm mt-1">{{ product.brand }}</p>
+          </div>
+        </a>
 
-            <div class="mt-4 flex items-center justify-between">
-              <span class="text-xl font-bold text-gray-900">
-                {{ product.price | currency : "PEN" : "symbol" : "1.2-2" }}
+        <div class="px-4 pb-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xl font-bold text-gray-900">
+              {{ product.price | currency : "PEN" : "symbol" : "1.2-2" }}
+            </span>
+            <button
+              (click)="addToCart(product)"
+              [disabled]="addedProductId === product.id"
+              [class.bg-green-600]="addedProductId !== product.id"
+              [class.bg-emerald-500]="addedProductId === product.id"
+              [class.opacity-50]="addedProductId === product.id"
+              [class.cursor-not-allowed]="addedProductId === product.id"
+              class="text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 transition-all duration-200 transform active:scale-95 disabled:hover:bg-emerald-500"
+            >
+              @if (addedProductId === product.id) {
+              <span class="inline-flex items-center gap-1">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                  <path
+                    fill-rule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                ¡Agregado!
               </span>
-              <button
-                (click)="addToCart(product); $event.preventDefault()"
-                class="bg-green-600 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-green-700 cursor-pointer"
-              >
-                Agregar
-              </button>
-            </div>
+              } @else { Agregar }
+            </button>
           </div>
         </div>
-      </a>
+      </div>
+
       } @empty {
       <!-- Estado: Cargando productos (sin búsqueda) -->
       @if (isLoading && !isSearching) {

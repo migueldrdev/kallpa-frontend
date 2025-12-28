@@ -30,6 +30,8 @@ export class HomeComponent implements OnInit {
   isFirst: boolean = true;
   isLast: boolean = false;
 
+  addedProductId: string | null = null;
+
   loadAllProducts() {
     this.isLoading = true;
     this.hasConnectionError = false;
@@ -115,7 +117,12 @@ export class HomeComponent implements OnInit {
 
   addToCart(product: Product, quantity: number = 1): void {
     if (product) {
-      this.cartService.addToCart(product, quantity);
+      // 🔥 Feedback visual temporal
+      this.addedProductId = product.id;
+      setTimeout(() => {
+        this.cartService.addToCart(product, quantity);
+        this.addedProductId = null;
+      }, 1000);
     }
   }
 
