@@ -1,0 +1,18 @@
+<nav class="bg-gray-900 text-white p-4 shadow-md sticky top-0 z-50">
+  <div class="container mx-auto flex justify-between items-center">
+
+    <a routerLink="/" class="text-2xl font-bold tracking-tight text-yellow-500">
+      Kallpa<span class="text-white">Shop</span>
+    </a>
+
+    <button class="relative p-2 hover:bg-gray-800 rounded-full transition">
+      <span class="text-2xl">🛒</span>
+
+      @if (cartService.totalItems() > 0) {
+        <span class="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full animate-bounce">
+          {{ cartService.totalItems() }}
+        </span>
+      }
+    </button>
+  </div>
+</nav>

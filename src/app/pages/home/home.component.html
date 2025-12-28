@@ -1,9 +1,6 @@
 <main>
   <div class="min-h-screen bg-gray-100 p-8">
-    <h1 class="text-3xl font-bold text-center mb-8 text-gray-800">
-      Kallpa Store 🇵🇪
-    </h1>
-    <!-- Agrega un campo de búsqueda -->
+    <!-- Campo de búsqueda -->
     <div class="mb-6 max-w-6xl mx-auto">
       <input
         type="text"
@@ -13,6 +10,7 @@
       />
     </div>
 
+    <!-- Lista de productos -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
       @for (product of products; track product.id) {
       <div
@@ -159,6 +157,8 @@
       </div>
       } }
     </div>
+
+    <!-- Paginación -->
     <app-pagination
       [currentPage]="currentPage"
       [totalPages]="totalPages"
