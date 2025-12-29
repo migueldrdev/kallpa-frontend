@@ -1,0 +1,90 @@
+<div class="min-h-screen bg-gray-50 py-12">
+  <div class="container mx-auto px-4 max-w-5xl">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Confirma y paga tu compra</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <div class="bg-white p-6 rounded-lg shadow-sm">
+        <h2 class="text-xl font-semibold mb-6">Datos de Envío</h2>
+
+        <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()" class="space-y-4">
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Nombre Completo</label>
+            <input
+              type="text"
+              formControlName="name"
+              class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
+              [class.border-red-500]="checkoutForm.get('name')?.invalid && checkoutForm.get('name')?.touched"
+            >
+            @if (checkoutForm.get('name')?.invalid && checkoutForm.get('name')?.touched) {
+              <p class="text-red-500 text-xs mt-1">El nombre es requerido</p>
+            }
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Correo Electrónico</label>
+            <input
+              type="email"
+              formControlName="email"
+              class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
+            >
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-gray-700">Dirección de Entrega</label>
+            <input
+              type="text"
+              formControlName="address"
+              class="mt-1 block w-full p-3 border border-gray-300 rounded-md shadow-sm focus:ring-green-500 focus:border-green-500"
+            >
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="checkoutForm.invalid || isSubmitting || cartItems().length === 0"
+            class="md:hidden w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 disabled:opacity-50 mt-4"
+          >
+            {{ isSubmitting ? 'Procesando...' : 'Pagar Ahora' }}
+          </button>
+        </form>
+      </div>
+
+      <div class="bg-white p-6 rounded-lg shadow-sm h-fit">
+        <h2 class="text-xl font-semibold mb-6">Resumen de la compra</h2>
+
+        <div class="space-y-4 mb-6 max-h-80 overflow-y-auto">
+          @for (item of cartItems(); track item.product.id) {
+            <div class="flex justify-between items-center text-sm">
+              <div class="flex items-center gap-3">
+                <span class="font-medium text-gray-900">{{ item.quantity }}x</span>
+                <span class="text-gray-600">{{ item.product.name }}</span>
+              </div>
+              <span class="font-medium">
+                {{ (item.product.price * item.quantity) | currency:'PEN':'symbol':'1.2-2' }}
+              </span>
+            </div>
+          }
+        </div>
+
+        <div class="border-t pt-4 space-y-2">
+          <div class="flex justify-between text-lg font-bold">
+            <span>Total a Pagar</span>
+            <span class="text-green-700">
+              {{ totalPrice() | currency:'PEN':'symbol':'1.2-2' }}
+            </span>
+          </div>
+        </div>
+
+        <button
+          (click)="onSubmit()"
+          [disabled]="checkoutForm.invalid || isSubmitting || cartItems().length === 0"
+          class="hidden md:block w-full mt-6 bg-green-600 text-white py-4 rounded-lg font-bold hover:bg-green-700 disabled:opacity-50 transition-all active:scale-95"
+        >
+          {{ isSubmitting ? 'Procesando...' : 'Confirmar Compra' }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
