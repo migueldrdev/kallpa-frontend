@@ -37,6 +37,8 @@ export class CartService {
         return [...currentItems, { product, quantity }];
       }
     });
+
+    this.openCart();
   }
 
   // ✅ Actualizar cantidad directamente (útil para input numérico en el carrito)
@@ -71,4 +73,22 @@ export class CartService {
   getCartItems(): Signal<CartItem[]> {
     return this.cartItems.asReadonly();
   }
+
+  // ✅ Estado de visibilidad del carrito
+  isOpen = signal<boolean>(false);
+
+  toggleCart(): void {
+    this.isOpen.update(open => !open);
+  }
+
+  closeCart(): void {
+    this.isOpen.set(false);
+  }
+
+  openCart(): void {
+    this.isOpen.set(true);
+  }
+
+
+
 }

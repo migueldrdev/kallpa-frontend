@@ -5,7 +5,7 @@
       Kallpa<span class="text-white">Shop</span>
     </a>
 
-    <button class="relative p-2 hover:bg-gray-800 rounded-full transition">
+    <button (click)="cartService.toggleCart()" class="relative p-2 hover:bg-gray-800 rounded-full transition">
       <span class="text-2xl">🛒</span>
 
       @if (cartService.totalItems() > 0) {
