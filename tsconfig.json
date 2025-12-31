@@ -24,6 +24,7 @@
       "@models/*": ["src/app/models/*"],
       "@pages/*": ["src/app/pages/*"],
       "@services/*": ["src/app/services/*"],
+      "@guards/*": ["src/app/guards/*"],
       "@environments/*": ["src/environments/*"]
     }
   },

@@ -1,0 +1,98 @@
+<div class="min-h-screen h-screen flex overflow-hidden">
+
+  <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 items-center justify-center overflow-hidden">
+    <img
+      src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop"
+      alt="Kallpa Shopping"
+      class="absolute inset-0 w-full h-full object-cover opacity-40 hover:scale-105 transition-transform duration-[20s]"
+    >
+
+    <div class="relative z-10 p-12 text-center text-white max-w-xl">
+      <h1 class="text-5xl font-extrabold mb-6 tracking-tight">Kallpa<span class="text-green-400">.</span></h1>
+      <p class="text-xl font-light leading-relaxed text-gray-200">
+        Tu destino para tecnología y moda. Accede a ofertas exclusivas y gestiona tus pedidos en un solo lugar.
+      </p>
+    </div>
+
+    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-gray-900 to-transparent"></div>
+  </div>
+
+  <div class="w-full lg:w-1/2 flex flex-col h-full bg-white relative">
+
+    <a routerLink="/" class="absolute top-6 right-6 text-gray-400 hover:text-green-600 transition flex items-center gap-2 text-sm font-medium z-20">
+      <span>Volver a la tienda</span> ✕
+    </a>
+
+    <div class="flex-1 flex items-center justify-center p-8 sm:p-12 lg:p-24 overflow-y-auto">
+      <div class="w-full max-w-sm space-y-8">
+
+        <div class="text-center lg:text-left">
+          <h2 class="text-3xl font-bold text-gray-900 tracking-tight">Hola de nuevo 👋</h2>
+          <p class="mt-2 text-sm text-gray-500">Ingresa tus credenciales para acceder</p>
+        </div>
+
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="mt-8 space-y-6">
+
+          <div class="space-y-5">
+            <div class="group">
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Correo Electrónico</label>
+              <div class="relative">
+                <input
+                  type="email"
+                  formControlName="email"
+                  class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all outline-none"
+                  placeholder="nombre@ejemplo.com"
+                >
+                @if(loginForm.get('email')?.valid && loginForm.get('email')?.touched) {
+                  <span class="absolute right-3 top-3.5 text-green-500">✓</span>
+                }
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1">Contraseña</label>
+              <input
+                type="password"
+                formControlName="password"
+                class="block w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all outline-none"
+                placeholder="••••••••"
+              >
+              <div class="flex justify-end mt-1">
+                <a href="#" class="text-xs font-medium text-green-600 hover:text-green-500 hover:underline">
+                  ¿Olvidaste tu contraseña?
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            [disabled]="loginForm.invalid || isSubmitting"
+            class="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-bold text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform active:scale-[0.98]"
+          >
+            @if(isSubmitting) {
+              <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Entrando...
+            } @else {
+              INGRESAR AHORA
+            }
+          </button>
+
+          <p class="text-center text-sm text-gray-600 mt-8">
+            ¿Aún no tienes cuenta?
+            <a routerLink="/register" class="font-bold text-green-600 hover:text-green-500 transition cursor-pointer">
+              Crea una gratis
+            </a>
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <div class="p-6 text-center text-xs text-gray-400">
+      &copy; 2025 Kallpa Store. Seguro y protegido.
+    </div>
+  </div>
+</div>

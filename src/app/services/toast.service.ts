@@ -32,4 +32,5 @@ export class ToastService {
   // Helpers rápidos
   success(msg: string) { this.show(msg, 'success'); }
   error(msg: string) { this.show(msg, 'error', 4000); }
+  info(msg: string) { this.show(msg, 'info'); }
 }
