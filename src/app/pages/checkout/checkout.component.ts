@@ -2,8 +2,9 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CartService } from '../../services/cart.service';
-import { OrderService, CreateOrderDto } from '../../services/order.service';
+import { CartService } from '@services/cart.service';
+import { OrderService, CreateOrderDto } from '@services/order.service';
+import { ToastService } from '@services/toast.service';
 
 @Component({
   selector: 'app-checkout',
@@ -16,6 +17,7 @@ export class CheckoutComponent {
   private cartService = inject(CartService);
   private orderService = inject(OrderService);
   private router = inject(Router);
+  private toastService = inject(ToastService);
 
   // Exponemos el carrito para mostrar el resumen y total
   cartItems = this.cartService.getCartItems();
@@ -52,7 +54,7 @@ export class CheckoutComponent {
         console.log('Orden creada:', res.orderId);
         this.cartService.clearCart(); // ¡Limpiamos el carrito!
         this.router.navigate(['/']); // Redirigimos al Home (o a una página de éxito)
-        alert(`¡Gracias por tu compra! Orden #${res.orderId}`);
+        this.toastService.success(`¡Orden #${res.orderId} creada con éxito!`);
       },
       error: (err) => {
         console.error(err);

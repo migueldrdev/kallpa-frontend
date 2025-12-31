@@ -1,0 +1,24 @@
+<div class="fixed top-4 right-4 z-50 flex flex-col gap-3 w-full max-w-xs pointer-events-none">
+
+  @for (toast of toastService.toasts(); track toast.id) {
+    <div
+      class="pointer-events-auto flex items-center w-full p-4 rounded-lg shadow-lg text-white transform transition-all duration-300 animate-slide-in"
+      [class.bg-green-600]="toast.type === 'success'"
+      [class.bg-red-600]="toast.type === 'error'"
+      [class.bg-blue-600]="toast.type === 'info'"
+      [class.bg-yellow-500]="toast.type === 'warning'"
+    >
+      <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg bg-white/20">
+        @if(toast.type === 'success') { <span>✅</span> }
+        @if(toast.type === 'error') { <span>⚠️</span> }
+        @if(toast.type === 'info') { <span>ℹ️</span> }
+      </div>
+
+      <div class="ml-3 text-sm font-normal">{{ toast.message }}</div>
+
+      <button (click)="toastService.remove(toast.id)" class="ml-auto -mx-1.5 -my-1.5 rounded-lg focus:ring-2 p-1.5 inline-flex items-center justify-center h-8 w-8 text-white hover:bg-white/10">
+        ✕
+      </button>
+    </div>
+  }
+</div>
