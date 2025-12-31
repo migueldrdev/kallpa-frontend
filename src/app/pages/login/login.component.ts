@@ -43,8 +43,14 @@ export class LoginComponent {
       error: (err) => {
         this.isSubmitting = false;
         // Manejamos el error 401 que configuramos en el Backend
-        if (err.status === 401) {
-          this.toastService.error('Credenciales incorrectas');
+        // obtener la primera key del objeto fieldErrors para mostrar el mensaje adecuado
+        console.log("Error ->", err);
+
+        const firstFieldErrorKey = err?.error?.fieldErrors ? Object.keys(err.error.fieldErrors)[0] : null;
+        if (firstFieldErrorKey) {
+          this.toastService.error(err.error.fieldErrors[firstFieldErrorKey]);
+        } else if (err.status === 401) {
+          this.toastService.error(err.error.description || 'Credenciales inválidas');
         } else {
           this.toastService.error('Error de conexión con el servidor');
         }

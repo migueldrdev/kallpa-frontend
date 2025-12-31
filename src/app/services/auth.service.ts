@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { environment } from '@environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Observable, tap } from 'rxjs';
+import { ApiConfigService } from '@services/api-config.service';
 
 // Tipos para las respuestas y payloads
 interface LoginResponse {
@@ -24,7 +25,8 @@ interface AuthUser {
 export class AuthService {
   private http = inject(HttpClient);
   private router = inject(Router);
-  private apiUrl = `${environment.apiUrl}/auth`;
+  private readonly apiConfig = inject(ApiConfigService);
+  private apiUrl = this.apiConfig.endpoints.auth;
   private tokenKey = 'kallpa_token';
 
   // --- ESTADO REACTIVO (Signals) ---
