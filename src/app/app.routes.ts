@@ -10,7 +10,7 @@ export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'p/:slug', component: ProductDetailComponent },
   {
-    path: 'checkout/express',
+    path: 'checkout',
     component: CheckoutComponent,
     canActivate: [authGuard], // <--- ¡Candado puesto!
   },
