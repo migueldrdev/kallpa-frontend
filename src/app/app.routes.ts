@@ -4,6 +4,7 @@ import { ProductDetailComponent } from '@pages/product-detail/product-detail.com
 import { CheckoutComponent } from '@pages/checkout/checkout.component';
 import { LoginComponent } from '@pages/login/login.component';
 import { RegisterComponent } from '@pages/register/register.component';
+import { OrderListComponent } from '@pages/order-list/order-list.component';
 import { authGuard } from '@guards/auth.guard';
 
 export const routes: Routes = [
@@ -13,6 +14,11 @@ export const routes: Routes = [
     path: 'checkout',
     component: CheckoutComponent,
     canActivate: [authGuard], // <--- ¡Candado puesto!
+  },
+  {
+    path: 'orders',
+    component: OrderListComponent,
+    canActivate: [authGuard] // ¡Protegido!
   },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },

@@ -25,4 +25,8 @@ export class OrderService {
   createOrder(order: CreateOrderDto): Observable<{ orderId: string, message: string }> {
     return this.http.post<{ orderId: string, message: string }>(this.apiUrl, order);
   }
+
+  getMyOrders(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/my-orders`);
+  }
 }
