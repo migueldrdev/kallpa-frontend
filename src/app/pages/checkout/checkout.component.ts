@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { CartService } from '@services/cart.service';
 import { OrderService, CreateOrderDto } from '@services/order.service';
 import { ToastService } from '@services/toast.service';
+import { AuthService } from '@services/auth.service';
 
 @Component({
   selector: 'app-checkout',
@@ -13,6 +14,7 @@ import { ToastService } from '@services/toast.service';
   styleUrl: './checkout.component.css'
 })
 export class CheckoutComponent {
+  authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private cartService = inject(CartService);
   private orderService = inject(OrderService);
@@ -62,5 +64,22 @@ export class CheckoutComponent {
         alert('Hubo un error procesando tu pedido. Revisa el stock.');
       }
     });
+  }
+
+  ngOnInit() {
+    console.log("Carga checkout");
+
+    // PRE-LLENADO DE DATOS
+    const user = this.authService.currentUser();
+
+    if (user) {
+      // Usamos patchValue para rellenar lo que tenemos
+      this.checkoutForm.patchValue({
+        name: user.name,
+        email: user.sub // 'sub' suele ser el email en el JWT
+      });
+      // Opcional: Podrías deshabilitar el campo email si quieres obligar a usar ese
+      // this.checkoutForm.get('email')?.disable();
+    }
   }
 }
